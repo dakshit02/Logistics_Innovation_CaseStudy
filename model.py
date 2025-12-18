@@ -1,7 +1,7 @@
 import pandas as pd
 import pickle
 
-from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.preprocessing import LabelEncoder, StandardScaler   #ML models cannot understand text like: "Express" "Economy"  "Fashion" .So we convert categories → numbers. Express → 0 Standard → 1
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 
@@ -79,7 +79,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 model = LogisticRegression(max_iter=1000)
 model.fit(X_train, y_train)
 
-
+# saving the pickle file so that we do not have to train the model again and again
 with open("delay_model.pkl", "wb") as f:
     pickle.dump(model, f)
 
