@@ -12,9 +12,8 @@ routes = pd.read_csv("data/routes_distance.csv")
 customers = pd.read_csv("data/customer_feedback.csv")
 costs = pd.read_csv("data/cost_breakdown.csv")
 
-# -----------------------------
+
 # Create target variable
-# -----------------------------
 delivery["delay_days"] = (
     delivery["Actual_Delivery_Days"] - delivery["Promised_Delivery_Days"]
 )
@@ -23,23 +22,20 @@ delivery["delayed"] = delivery["delay_days"].apply(
     lambda x: 1 if x > 0 else 0
 )
 
-# -----------------------------
 # Merge datasets using Order_ID
-# -----------------------------
 df = orders.merge(delivery, on="Order_ID", how="inner")
 df = df.merge(routes, on="Order_ID", how="left")
 df = df.merge(customers[["Order_ID", "Rating", "Would_Recommend"]], on="Order_ID", how="left")
 df = df.merge(costs, on="Order_ID", how="left")
 
-print("Final columns:")
-print(df.columns)
-print("\nShape:", df.shape)
-print(df.head())
+# print("Final columns:")
+# print(df.columns)
+# print("\nShape:", df.shape)
+# print(df.head())
 
 
-# -----------------------------
+
 # Feature selection
-# -----------------------------
 features = df[
     [
         "Priority",
